@@ -1,3 +1,6 @@
 {
-  "DORA": "dora.txt"
+  "GDPR": "gdpr.txt",
+  "DORA": "dora.txt",
+  "PSD2": "psd.txt",
+  "NIS2": "nis.txt"
 }
