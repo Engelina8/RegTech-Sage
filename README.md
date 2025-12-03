@@ -1,0 +1,2 @@
+# RegTech-Sage
+**RegTech Sage** is an AI-powered assistant specialized in compliance for regulated industries. It explains PSD2, DORA, GDPR, NIS2, and digital-sovereignty concepts in clear terms, helping teams navigate secure data sharing, governance, and regulatory requirements in finance, health, and public sectors.
