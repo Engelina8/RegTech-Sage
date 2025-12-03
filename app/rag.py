@@ -1,29 +1,38 @@
-# Minimal keyword-based retrieval for regulations
 import json
-import os
+from pathlib import Path
 
-REGULATIONS_PATH = os.path.join(os.path.dirname(__file__), '..', 'data', 'regulations.json')
+DATA_PATH = Path(__file__).resolve().parent.parent / "data" / "regulations.json"
 
-try:
-	with open(REGULATIONS_PATH, encoding='utf-8') as f:
-		REGULATIONS = json.load(f)
-except Exception:
-	REGULATIONS = []
+with open(DATA_PATH, "r", encoding="utf-8") as f:
+    REGULATIONS = json.load(f)
 
-KEYWORDS = [
-	("gdpr", ["gdpr", "general data protection regulation"]),
-	("dora", ["dora", "digital operational resilience act"]),
-	("psd2", ["psd2", "payment services directive"]),
-	("nis2", ["nis2", "network and information security"]),
-	("cyber", ["cyber", "cybersecurity"]),
-	("open_banking", ["open banking"])
-]
+def find_best_snippet(question: str) -> tuple[str | None, str | None]:
+    """
+    Very dumb retrieval:
+    - if a keyword appears in question, return that snippet.
+    """
+    q_lower = question.lower()
 
-def retrieve_snippet(user_question: str):
-	q = user_question.lower()
-	for key, variants in KEYWORDS:
-		if any(word in q for word in variants):
-			for snippet in REGULATIONS:
-				if snippet.get("id", "").lower() == key:
-					return snippet.get("id"), snippet.get("text")
-	return None, None
+    keyword_map = {
+        "gdpr": "gdpr",
+        "dora": "dora",
+        "psd2": "psd2",
+        "open banking": "psd2",
+        "nis2": "nis2",
+        "cyber": "nis2",
+    }
+
+    target = None
+    for word, tag in keyword_map.items():
+        if word in q_lower:
+            target = tag
+            break
+
+    if not target:
+        return None, None
+
+    for item in REGULATIONS:
+        if target in [t.lower() for t in item.get("tags", [])]:
+            return item["id"], item["text"]
+
+    return None, None

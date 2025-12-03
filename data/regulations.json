@@ -1,0 +1,22 @@
+[
+    {
+      "id": "GDPR-Art-6",
+      "tags": ["gdpr", "lawful basis", "processing"],
+      "text": "GDPR Article 6 describes the lawful bases for processing personal data..."
+    },
+    {
+      "id": "DORA-Overview",
+      "tags": ["dora", "ict risk", "finance"],
+      "text": "DORA establishes ICT risk management requirements for financial entities in the EU..."
+    },
+    {
+      "id": "PSD2-SCA",
+      "tags": ["psd2", "strong customer authentication"],
+      "text": "PSD2 introduces Strong Customer Authentication (SCA) for electronic payments..."
+    },
+    {
+      "id": "NIS2-Scope",
+      "tags": ["nis2", "critical entities"],
+      "text": "NIS2 extends cybersecurity requirements to a broader set of essential and important entities..."
+    }
+  ]
