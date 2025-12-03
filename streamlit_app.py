@@ -89,14 +89,19 @@ st.title("RegTech Sage: EU Compliance Chatbot")
 if "messages" not in st.session_state:
     st.session_state["messages"] = []
 
+
 user_input = st.text_input("Ask a compliance question:", "")
 if st.button("Send") and user_input.strip():
     st.session_state["messages"].append(("user", user_input))
     snippet_id, snippet_text = find_best_snippet(user_input)
-    messages = build_prompt(user_input, snippet_text)
-    answer = call_mistral(messages)
-    answer = add_disclaimer(answer)
-    st.session_state["messages"].append(("bot", answer))
+    # Only call LLM if question is in scope
+    if snippet_id is not None:
+        messages = build_prompt(user_input, snippet_text)
+        answer = call_mistral(messages)
+        answer = add_disclaimer(answer)
+        st.session_state["messages"].append(("bot", answer))
+    else:
+        st.session_state["messages"].append(("bot", "Outside of scope. This assistant only answers questions about EU regulations and compliance.\n\nThis is general information, not legal advice."))
 
 for role, msg in st.session_state["messages"]:
     if role == "user":
